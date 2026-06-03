@@ -31,7 +31,8 @@
   padding: 0;
 }
 
-.navbar-menu li a {
+.navbar-menu li a,
+.navbar-menu li a:visited {
   color: white;
   text-decoration: none;
   font-weight: 500;

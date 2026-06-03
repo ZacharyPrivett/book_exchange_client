@@ -1,23 +1,39 @@
 import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 import './Navbar.css';
 import LoginModal from './LoginModal';
+import { RegisterModal } from './RegisterModal';
 
 const Navbar = () => {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [username, setUsername] = useState('');
+  const [isRegisterOpen, setIsRegisterOpen] = useState(false);
+  const { user, isAuthenticated, logout } = useAuth();
+  const navigate = useNavigate();
 
   const handleLogout = () => {
-    setIsLoggedIn(false);
-    setUsername('');
-    localStorage.removeItem('token'); // Clear any stored token
+    logout();
+    navigate('/');
   };
 
-  const handleLoginSuccess = (user: string, token: string) => {
-    setIsLoggedIn(true);
-    setUsername(user);
-    localStorage.setItem('token', token);
+  const handleLoginSuccess = () => {
     setIsLoginOpen(false);
+    navigate('/dashboard');
+  };
+
+  const handleRegisterSuccess = () => {
+    setIsRegisterOpen(false);
+    navigate('/dashboard');
+  };
+
+  const switchToRegister = () => {
+    setIsLoginOpen(false);
+    setIsRegisterOpen(true);
+  };
+
+  const switchToLogin = () => {
+    setIsRegisterOpen(false);
+    setIsLoginOpen(true);
   };
 
   return (
@@ -25,20 +41,26 @@ const Navbar = () => {
       <nav className="navbar">
         <div className="navbar-container">
           <div className="navbar-brand">
-            <h2>📚 QC Book Trader</h2>
+            <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
+              <h2>📚 QC Book Trader</h2>
+            </Link>
           </div>
           
           <ul className="navbar-menu">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#books">Books</a></li>
-            <li><a href="#exchange">Exchange</a></li>
-            <li><a href="#about">About</a></li>
+            <li><Link to="/">Home</Link></li>
+            {isAuthenticated && (
+              <>
+                <li><Link to="/dashboard">Dashboard</Link></li>
+                <li><a href="#books">Books</a></li>
+                <li><a href="#exchange">Exchange</a></li>
+              </>
+            )}
           </ul>
 
           <div className="navbar-auth">
-            {isLoggedIn ? (
+            {isAuthenticated ? (
               <div className="user-info">
-                <span>Welcome, {username}!</span>
+                <span>Welcome, {user?.displayName}!</span>
                 <button onClick={handleLogout} className="btn-logout">
                   Logout
                 </button>
@@ -56,6 +78,15 @@ const Navbar = () => {
         <LoginModal 
           onClose={() => setIsLoginOpen(false)}
           onLoginSuccess={handleLoginSuccess}
+          onSwitchToRegister={switchToRegister}
+        />
+      )}
+
+      {isRegisterOpen && (
+        <RegisterModal 
+          onClose={() => setIsRegisterOpen(false)}
+          onRegisterSuccess={handleRegisterSuccess}
+          onSwitchToLogin={switchToLogin}
         />
       )}
     </>
