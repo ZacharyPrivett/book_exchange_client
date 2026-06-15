@@ -1,16 +1,20 @@
 import { useState } from 'react';
+import { useAuth } from '../contexts/AuthContext';
 import './LoginModal.css';
 
 interface LoginModalProps {
   onClose: () => void;
-  onLoginSuccess: (username: string, token: string) => void;
+  onLoginSuccess: () => void;
+  onSwitchToRegister: () => void;
 }
 
-const LoginModal = ({ onClose, onLoginSuccess }: LoginModalProps) => {
+const LoginModal = ({ onClose, onLoginSuccess, onSwitchToRegister }: LoginModalProps) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [rememberMe, setRememberMe] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const { login } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -18,32 +22,11 @@ const LoginModal = ({ onClose, onLoginSuccess }: LoginModalProps) => {
     setError('');
 
     try {
-      // TODO: Replace with your actual API endpoint
-      const API_URL = 'http://localhost:5000/api/auth/login'; // Update this to your actual API URL
-      
-      const response = await fetch(API_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || 'Login failed');
-      }
-
-      // Assuming your API returns a token and user info
-      const token = data.token || data.accessToken;
-      const username = data.username || data.user?.name || email.split('@')[0];
-
-      onLoginSuccess(username, token);
-      
-      console.log('Login successful!', data);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred during login');
+      await login({ email, password, rememberMe });
+      onLoginSuccess();
+      console.log('Login successful!');
+    } catch (err: any) {
+      setError(err.response?.data?.message || err.message || 'Login failed. Please check your credentials.');
       console.error('Login error:', err);
     } finally {
       setIsLoading(false);
@@ -68,6 +51,7 @@ const LoginModal = ({ onClose, onLoginSuccess }: LoginModalProps) => {
               required
               placeholder="Enter your email"
               autoComplete="email"
+              disabled={isLoading}
             />
           </div>
 
@@ -81,7 +65,20 @@ const LoginModal = ({ onClose, onLoginSuccess }: LoginModalProps) => {
               required
               placeholder="Enter your password"
               autoComplete="current-password"
+              disabled={isLoading}
             />
+          </div>
+
+          <div className="form-group checkbox">
+            <label>
+              <input
+                type="checkbox"
+                checked={rememberMe}
+                onChange={(e) => setRememberMe(e.target.checked)}
+                disabled={isLoading}
+              />
+              Remember me
+            </label>
           </div>
 
           {error && <div className="error-message">{error}</div>}
@@ -96,7 +93,8 @@ const LoginModal = ({ onClose, onLoginSuccess }: LoginModalProps) => {
         </form>
 
         <div className="modal-footer">
-          <p>Don't have an account? <a href="#signup">Sign up</a></p>
+          <a href="#forgot-password">Forgot password?</a>
+          <p>Don't have an account? <button type="button" onClick={onSwitchToRegister} className="link-button">Sign up</button></p>
         </div>
       </div>
     </div>
