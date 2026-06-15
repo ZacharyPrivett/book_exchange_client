@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import Navbar from '../components/Navbar';
+import { RegisterModal } from '../components/RegisterModal';
 import './Home.css';
 
 export const Home = () => {

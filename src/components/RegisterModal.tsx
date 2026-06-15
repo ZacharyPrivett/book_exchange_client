@@ -26,7 +26,7 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({ onClose, onRegiste
   const [loading, setLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
 
-  const { login } = useAuth();
+  const { register } = useAuth();
   const navigate = useNavigate();
 
   const validateForm = (): boolean => {
@@ -71,8 +71,8 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({ onClose, onRegiste
     // Age validation
     if (!formData.age) {
       newErrors.age = 'Age is required';
-    } else if (parseInt(formData.age) < 13) {
-      newErrors.age = 'You must be at least 13 years old';
+    } else if (parseInt(formData.age) < 18) {
+      newErrors.age = 'You must be at least 18 years old';
     }
 
     setErrors(newErrors);
@@ -99,33 +99,23 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({ onClose, onRegiste
     setErrors({});
 
     try {
-      const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5277';
-      const response = await fetch(`${API_BASE_URL}/auth/register`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
+      // Register user using authService
+      await register({
+        email: formData.email,
+        password: formData.password,
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        displayName: formData.displayName,
+        age: formData.age,
+        phoneNumber: formData.phoneNumber || undefined,
       });
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || 'Registration failed');
-      }
-
-      setSuccessMessage('Account created successfully! Logging you in...');
+      setSuccessMessage('Account created successfully! Redirecting to dashboard...');
       
-      // Auto-login after successful registration
-      setTimeout(async () => {
-        try {
-          await login({ email: formData.email, password: formData.password });
-          onRegisterSuccess();
-          navigate('/dashboard');
-        } catch (loginError) {
-          console.error('Auto-login failed:', loginError);
-          setErrors({ general: 'Account created but login failed. Please try logging in manually.' });
-        }
+      // Navigate after successful registration
+      setTimeout(() => {
+        onRegisterSuccess();
+        navigate('/dashboard');
       }, 1500);
 
     } catch (error: any) {
