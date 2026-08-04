@@ -26,8 +26,17 @@ const LoginModal = ({ onClose, onLoginSuccess, onSwitchToRegister }: LoginModalP
       onLoginSuccess();
       console.log('Login successful!');
     } catch (err: any) {
-      setError(err.response?.data?.message || err.message || 'Login failed. Please check your credentials.');
-      console.error('Login error:', err);
+        let errorMessage = 'Login failed. Please check your credentials.';
+  
+        if (err.response?.status === 401) {
+          errorMessage = 'Invalid email or password.';
+        } else if (err.response?.data?.message) {
+        // For other errors (500, 400, etc.), use backend message if available
+        errorMessage = err.response.data.message;
+        }
+
+        setError(errorMessage);
+        console.error('Login error:', err);
     } finally {
       setIsLoading(false);
     }
