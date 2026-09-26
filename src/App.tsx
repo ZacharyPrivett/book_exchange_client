@@ -3,6 +3,8 @@ import { AuthProvider } from './contexts/AuthContext';
 import { Home } from './pages/Home';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { Dashboard } from './pages/Dashboard';
+import OAuthCallback from './components/OAuthCallback';
+
 
 function App() {
   return (
@@ -10,6 +12,7 @@ function App() {
       <AuthProvider>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/auth/callback" element={<OAuthCallback />} />
           <Route
             path="/dashboard"
             element={

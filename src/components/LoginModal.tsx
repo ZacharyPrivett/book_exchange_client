@@ -42,6 +42,14 @@ const LoginModal = ({ onClose, onLoginSuccess, onSwitchToRegister }: LoginModalP
     }
   };
 
+  const handleOAuthLogin = (provider: 'Google' | 'Microsoft') => {
+    const apiUrl = import.meta.env.VITE_API_URL || 'https://localhost:7253';
+    const returnUrl = encodeURIComponent(window.location.origin);
+  
+    // Redirect to backend OAuth endpoint
+    window.location.href = `${apiUrl}/auth/external-login/${provider}?returnUrl=${returnUrl}`;
+};
+
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
@@ -100,6 +108,28 @@ const LoginModal = ({ onClose, onLoginSuccess, onSwitchToRegister }: LoginModalP
             {isLoading ? 'Logging in...' : 'Login'}
           </button>
         </form>
+
+        <div className="divider">
+          <span>OR</span>
+        </div>
+
+        <button 
+          type="button"
+          className="btn-oauth btn-google"
+          onClick={() => handleOAuthLogin('Google')}
+          disabled={isLoading}
+        >
+          <span>Continue with Google</span>
+        </button>
+
+        <button 
+          type="button"
+          className="btn-oauth btn-microsoft"
+          onClick={() => handleOAuthLogin('Microsoft')}
+          disabled={isLoading}
+        >
+          <span>Continue with Microsoft</span>
+        </button>
 
         <div className="modal-footer">
           <a href="#forgot-password">Forgot password?</a>
