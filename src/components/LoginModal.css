@@ -212,3 +212,62 @@
     font-size: 1.5rem;
   }
 }
+
+.divider {
+  margin: 1.5rem 0;
+  text-align: center;
+  position: relative;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 45%;
+  height: 1px;
+  background-color: #ddd;
+}
+
+.divider::before { left: 0; }
+.divider::after { right: 0; }
+
+.divider span {
+  background: white;
+  padding: 0 1rem;
+  color: #666;
+}
+
+.btn-oauth {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  background: white;
+  color: #333;
+  font-weight: 500;
+  transition: all 0.3s;
+}
+
+.btn-google { 
+  border-color: #db4437;
+  color: #db4437;  /* Google red text */
+}
+
+.btn-google:hover:not(:disabled) { 
+  background: #fff5f5;
+  color: #c1351d;  /* Darker red on hover */
+}
+
+.btn-microsoft { 
+  border-color: #00a4ef;
+  color: #00a4ef;  /* Microsoft blue text */
+}
+
+.btn-microsoft:hover:not(:disabled) { 
+  background: #f0f9ff;
+  color: #0078d4;  /* Darker blue on hover */
+}
