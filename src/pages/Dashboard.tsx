@@ -1,9 +1,11 @@
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import Navbar from '../components/Navbar';
 import './Dashboard.css';
 
 export const Dashboard = () => {
   const { user } = useAuth();
+  const navigate = useNavigate();
 
   // Sample stats - these would come from your API
   const stats = [
@@ -43,7 +45,7 @@ export const Dashboard = () => {
         <section className="quick-actions">
           <h2>Quick Actions</h2>
           <div className="action-buttons">
-            <button className="action-btn">
+            <button className="action-btn" onClick={() => navigate('/books/add')}>
               <span className="action-btn-icon">➕</span>
               List a Book
             </button>
