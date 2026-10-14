@@ -76,3 +76,13 @@ export interface ListingDetails {
   ownerDisplayName: string;
   createdAt: string;
 }
+
+// Matches BookExchange.Api.Books.Dtos.ListingSummaryDto
+export interface ListingSummary {
+  id: number;
+  title: string;
+  authors: string[];
+  coverImageUrl: string | null;
+  conditionName: string;
+  status: string;
+}

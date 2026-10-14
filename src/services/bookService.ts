@@ -6,6 +6,7 @@ import type {
   CreateListingRequest,
   CreateManualBookRequest,
   ListingDetails,
+  ListingSummary,
 } from '../types/book';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://localhost:7523';
@@ -51,6 +52,11 @@ export const bookService = {
 
   createManualBook: async (dto: CreateManualBookRequest): Promise<ListingDetails> => {
     const response = await api.post<ListingDetails>('/books/manual', dto);
+    return response.data;
+  },
+
+  getMyListings: async (): Promise<ListingSummary[]> => {
+    const response = await api.get<ListingSummary[]>('/books/mine');
     return response.data;
   },
 };

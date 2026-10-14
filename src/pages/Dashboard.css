@@ -121,6 +121,137 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+.library-section {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.section-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.section-heading h2 {
+  margin: 0 0 0.35rem;
+  color: #333;
+  font-size: 1.5rem;
+}
+
+.section-heading p {
+  margin: 0;
+  color: #666;
+}
+
+.library-action {
+  border: none;
+  border-radius: 8px;
+  padding: 0.7rem 1rem;
+  background: #667eea;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.library-action:hover {
+  background: #566bd1;
+}
+
+.library-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.library-card {
+  display: flex;
+  min-height: 150px;
+  overflow: hidden;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  background: #fff;
+}
+
+.library-cover {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 92px;
+  flex-shrink: 0;
+  background: #f0f2ff;
+  color: #667eea;
+  font-size: 2rem;
+}
+
+.library-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.library-card-content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+  padding: 1rem;
+}
+
+.library-card h3 {
+  margin: 0 0 0.4rem;
+  overflow: hidden;
+  color: #333;
+  font-size: 1rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.library-authors {
+  margin: 0;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.library-card-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-top: auto;
+  padding-top: 1rem;
+  color: #777;
+  font-size: 0.8rem;
+}
+
+.listing-status {
+  color: #4b8f5a;
+  font-weight: 600;
+}
+
+.library-message,
+.library-empty {
+  padding: 2rem;
+  text-align: center;
+  color: #777;
+}
+
+.library-error {
+  color: #b42318;
+}
+
+.library-empty p {
+  margin: 0.5rem 0 1rem;
+}
+
+.library-empty-icon {
+  font-size: 2rem;
+}
+
 .recent-activity h2 {
   margin: 0 0 1.5rem 0;
   color: #333;
@@ -192,5 +323,9 @@
 
   .action-buttons {
     grid-template-columns: 1fr;
+  }
+
+  .section-heading {
+    flex-direction: column;
   }
 }
