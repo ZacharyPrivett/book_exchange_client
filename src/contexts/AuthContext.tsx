@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import type { User, LoginRequest, AuthResponse, RegisterRequest } from '../types/auth';
 import { authService } from '../services/authService';
+import api from '../services/api';
 
 interface AuthContextType {
   user: User | null;
@@ -74,25 +75,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const handleOAuthCallback = async (accessToken: string, refreshToken: string) => {
     try {
-      // Decode JWT to get user info (you'll need to install jwt-decode)
-      // Or make a call to /auth/me endpoint to get user data
-    
-      // For now, store tokens and fetch user info
+      // Store tokens first so the shared `api` client's request interceptor
+      // (and its 401 refresh-retry logic) can pick them up automatically.
       localStorage.setItem('accessToken', accessToken);
       localStorage.setItem('refreshToken', refreshToken);
-      
-      // Fetch user profile from your backend
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/users/me`, {
-        headers: { Authorization: `Bearer ${accessToken}` }
-      });
-      
-      if (response.ok) {
-        const userData = await response.json();
-        localStorage.setItem('user', JSON.stringify(userData));
-        setUser(userData);
-      } else {
-        throw new Error('Failed to fetch user data');
-      }
+
+      // Fetch user profile from the backend
+      const response = await api.get('/users/me');
+      const userData = response.data;
+      localStorage.setItem('user', JSON.stringify(userData));
+      setUser(userData);
     } catch (error) {
       console.error('OAuth callback error:', error);
       throw error;
