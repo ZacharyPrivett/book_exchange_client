@@ -3,6 +3,7 @@ import { AuthProvider } from './contexts/AuthContext';
 import { Home } from './pages/Home';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { Dashboard } from './pages/Dashboard';
+import { AddBook } from './pages/AddBook';
 import OAuthCallback from './components/OAuthCallback';
 
 
@@ -18,6 +19,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/books/add"
+            element={
+              <ProtectedRoute>
+                <AddBook />
               </ProtectedRoute>
             }
           />
