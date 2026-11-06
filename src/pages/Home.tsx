@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import Navbar from '../components/Navbar';
-//import { RegisterModal } from '../components/RegisterModal';
+import { SkylinePhotoCredit } from '../components/SkylinePhotoCredit';
 import './Home.css';
 
 export const Home = () => {
@@ -16,6 +16,14 @@ export const Home = () => {
     }
   };
 
+  const handleSignUp = () => {
+    if (isAuthenticated) {
+      navigate('/dashboard');
+    } else {
+      navigate('/signup');
+    }
+  };
+
   return (
     <div className="home">
       <Navbar />
@@ -23,7 +31,7 @@ export const Home = () => {
       <section className="hero">
         <div className="hero-content">
           <h1 className="hero-title">
-            📚 Welcome to QC Book Trader
+            Welcome to Queen City Book Trader
           </h1>
           <p className="hero-subtitle">
             Exchange books with fellow readers in the Queen City community
@@ -32,13 +40,14 @@ export const Home = () => {
             {isAuthenticated ? 'Go to Dashboard' : 'Get Started'}
           </button>
         </div>
-        <div className="hero-image">
+        {/* <div className="hero-image">
           <div className="book-stack">
             <div className="book book-1">📖</div>
             <div className="book book-2">📚</div>
             <div className="book book-3">📕</div>
           </div>
-        </div>
+        </div> */}
+        <SkylinePhotoCredit />
       </section>
 
       <section className="features">
@@ -93,7 +102,7 @@ export const Home = () => {
       <section className="cta-section">
         <h2>Ready to Start Trading?</h2>
         <p>Join our community of book lovers today!</p>
-        <button className="cta-button-secondary" onClick={handleGetStarted}>
+        <button className="cta-button-secondary" onClick={handleSignUp}>
           {isAuthenticated ? 'Browse Books' : 'Sign Up Now'}
         </button>
       </section>

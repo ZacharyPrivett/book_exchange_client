@@ -1,16 +1,11 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, type ChangeEvent, type FormEvent } from 'react';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import type { RegisterFormData, FormErrors } from '../types/auth';
-import './RegisterModal.css';
+import { AuthLayout } from '../components/AuthLayout';
+import './Auth.css';
 
-interface RegisterModalProps {
-  onClose: () => void;
-  onRegisterSuccess: () => void;
-  onSwitchToLogin: () => void;
-}
-
-export const RegisterModal: React.FC<RegisterModalProps> = ({ onClose, onRegisterSuccess, onSwitchToLogin }) => {
+export const Signup = () => {
   const [formData, setFormData] = useState<RegisterFormData>({
     email: '',
     password: '',
@@ -26,8 +21,13 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({ onClose, onRegiste
   const [loading, setLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
 
-  const { register } = useAuth();
+  const { register, isAuthenticated } = useAuth();
   const navigate = useNavigate();
+
+  // Already logged in? No need to show the signup page.
+  if (isAuthenticated) {
+    return <Navigate to="/dashboard" replace />;
+  }
 
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
@@ -79,18 +79,18 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({ onClose, onRegiste
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
     // Clear error for this field when user starts typing
     if (errors[name as keyof FormErrors]) {
-      setErrors(prev => ({ ...prev, [name]: undefined }));
+      setErrors((prev) => ({ ...prev, [name]: undefined }));
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
@@ -99,7 +99,6 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({ onClose, onRegiste
     setErrors({});
 
     try {
-      // Register user using authService
       await register({
         email: formData.email,
         password: formData.password,
@@ -111,38 +110,30 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({ onClose, onRegiste
       });
 
       setSuccessMessage('Account created successfully! Redirecting to dashboard...');
-      
-      // Navigate after successful registration
+
       setTimeout(() => {
-        onRegisterSuccess();
         navigate('/dashboard');
       }, 1500);
-
-    } catch (error: any) {
-      setErrors({ general: error.message || 'Registration failed. Please try again.' });
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : 'Registration failed. Please try again.';
+      setErrors({ general: message });
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content register-modal-content" onClick={(e) => e.stopPropagation()}>
-        <button className="modal-close" onClick={onClose}>×</button>
-        
-        <h2>Create Your Account</h2>
+    <AuthLayout>
+      <div className="auth-card">
+        <h1 className="auth-title">Create your account</h1>
+        <p className="auth-subtitle">Start trading books with your community.</p>
 
-        {successMessage && (
-          <div className="success-message">{successMessage}</div>
-        )}
+        {successMessage && <div className="auth-success">{successMessage}</div>}
+        {errors.general && <div className="auth-error">{errors.general}</div>}
 
-        {errors.general && (
-          <div className="error-message">{errors.general}</div>
-        )}
-
-        <form onSubmit={handleSubmit}>
-          <div className="form-row">
-            <div className="form-group">
+        <form onSubmit={handleSubmit} className="auth-form" noValidate>
+          <div className="auth-field-grid">
+            <div className="auth-field">
               <label htmlFor="firstName">First Name *</label>
               <input
                 type="text"
@@ -151,12 +142,12 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({ onClose, onRegiste
                 value={formData.firstName}
                 onChange={handleChange}
                 disabled={loading}
-                className={errors.firstName ? 'error' : ''}
+                className={errors.firstName ? 'auth-input-error' : ''}
               />
-              {errors.firstName && <span className="field-error">{errors.firstName}</span>}
+              {errors.firstName && <span className="auth-field-error">{errors.firstName}</span>}
             </div>
 
-            <div className="form-group">
+            <div className="auth-field">
               <label htmlFor="lastName">Last Name *</label>
               <input
                 type="text"
@@ -165,13 +156,13 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({ onClose, onRegiste
                 value={formData.lastName}
                 onChange={handleChange}
                 disabled={loading}
-                className={errors.lastName ? 'error' : ''}
+                className={errors.lastName ? 'auth-input-error' : ''}
               />
-              {errors.lastName && <span className="field-error">{errors.lastName}</span>}
+              {errors.lastName && <span className="auth-field-error">{errors.lastName}</span>}
             </div>
           </div>
 
-          <div className="form-group">
+          <div className="auth-field">
             <label htmlFor="displayName">Username *</label>
             <input
               type="text"
@@ -180,13 +171,13 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({ onClose, onRegiste
               value={formData.displayName}
               onChange={handleChange}
               disabled={loading}
-              className={errors.displayName ? 'error' : ''}
+              className={errors.displayName ? 'auth-input-error' : ''}
               placeholder="This will be visible to other users"
             />
-            {errors.displayName && <span className="field-error">{errors.displayName}</span>}
+            {errors.displayName && <span className="auth-field-error">{errors.displayName}</span>}
           </div>
 
-          <div className="form-group">
+          <div className="auth-field">
             <label htmlFor="email">Email *</label>
             <input
               type="email"
@@ -195,14 +186,14 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({ onClose, onRegiste
               value={formData.email}
               onChange={handleChange}
               disabled={loading}
-              className={errors.email ? 'error' : ''}
+              className={errors.email ? 'auth-input-error' : ''}
               autoComplete="email"
             />
-            {errors.email && <span className="field-error">{errors.email}</span>}
+            {errors.email && <span className="auth-field-error">{errors.email}</span>}
           </div>
 
-          <div className="form-row">
-            <div className="form-group">
+          <div className="auth-field-grid">
+            <div className="auth-field">
               <label htmlFor="age">Age *</label>
               <input
                 type="number"
@@ -211,13 +202,13 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({ onClose, onRegiste
                 value={formData.age}
                 onChange={handleChange}
                 disabled={loading}
-                className={errors.age ? 'error' : ''}
+                className={errors.age ? 'auth-input-error' : ''}
                 min="13"
               />
-              {errors.age && <span className="field-error">{errors.age}</span>}
+              {errors.age && <span className="auth-field-error">{errors.age}</span>}
             </div>
 
-            <div className="form-group">
+            <div className="auth-field">
               <label htmlFor="phoneNumber">Phone Number</label>
               <input
                 type="tel"
@@ -231,7 +222,7 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({ onClose, onRegiste
             </div>
           </div>
 
-          <div className="form-group">
+          <div className="auth-field">
             <label htmlFor="password">Password *</label>
             <input
               type="password"
@@ -240,14 +231,14 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({ onClose, onRegiste
               value={formData.password}
               onChange={handleChange}
               disabled={loading}
-              className={errors.password ? 'error' : ''}
+              className={errors.password ? 'auth-input-error' : ''}
               autoComplete="new-password"
             />
-            {errors.password && <span className="field-error">{errors.password}</span>}
+            {errors.password && <span className="auth-field-error">{errors.password}</span>}
             <small>Minimum 10 characters</small>
           </div>
 
-          <div className="form-group">
+          <div className="auth-field">
             <label htmlFor="confirmPassword">Confirm Password *</label>
             <input
               type="password"
@@ -256,21 +247,23 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({ onClose, onRegiste
               value={formData.confirmPassword}
               onChange={handleChange}
               disabled={loading}
-              className={errors.confirmPassword ? 'error' : ''}
+              className={errors.confirmPassword ? 'auth-input-error' : ''}
               autoComplete="new-password"
             />
-            {errors.confirmPassword && <span className="field-error">{errors.confirmPassword}</span>}
+            {errors.confirmPassword && <span className="auth-field-error">{errors.confirmPassword}</span>}
           </div>
 
-          <button type="submit" className="btn-submit" disabled={loading}>
-            {loading ? 'Creating Account...' : 'Register'}
+          <button type="submit" className="auth-submit" disabled={loading}>
+            {loading ? 'Creating Account…' : 'Create Account'}
           </button>
         </form>
 
-        <div className="modal-footer">
-          <p>Already have an account? <button type="button" onClick={onSwitchToLogin} className="link-button">Login</button></p>
-        </div>
+        <p className="auth-switch">
+          Already have an account? <Link to="/login">Log in</Link>
+        </p>
       </div>
-    </div>
+    </AuthLayout>
   );
 };
+
+export default Signup;

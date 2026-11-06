@@ -1,0 +1,131 @@
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+}
+
+/* Left brand panel (desktop only) */
+.auth-brand-panel {
+  flex: 0 0 42%;
+  max-width: 560px;
+  background-image: var(--qc-overlay-dusk), url('../assets/charlotte-skyline.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: white;
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+}
+
+.auth-brand-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: white;
+  text-decoration: none;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.auth-brand-emoji {
+  font-size: 1.5rem;
+}
+
+.auth-brand-copy h1 {
+  font-size: 2.25rem;
+  line-height: 1.25;
+  font-weight: 700;
+  margin: 0 0 1rem 0;
+  color: white;
+}
+
+.auth-brand-copy p {
+  font-size: 1.05rem;
+  opacity: 0.9;
+  max-width: 380px;
+  margin: 0;
+}
+
+.auth-brand-float {
+  position: relative;
+  height: 140px;
+}
+
+.auth-float-book {
+  position: absolute;
+  font-size: 3.5rem;
+  animation: auth-float 3s ease-in-out infinite;
+  opacity: 0.9;
+}
+
+.auth-float-1 {
+  left: 0;
+  bottom: 0;
+  animation-delay: 0s;
+}
+
+.auth-float-2 {
+  left: 70px;
+  bottom: 30px;
+  animation-delay: 0.4s;
+}
+
+.auth-float-3 {
+  left: 140px;
+  bottom: 10px;
+  animation-delay: 0.8s;
+}
+
+@keyframes auth-float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-16px);
+  }
+}
+
+/* Right form panel */
+.auth-form-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5rem 1.5rem;
+  background: #fafafa;
+}
+
+.auth-mobile-logo {
+  display: none;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  color: #333;
+  text-decoration: none;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.auth-form-wrapper {
+  width: 100%;
+  max-width: 440px;
+}
+
+@media (max-width: 960px) {
+  .auth-brand-panel {
+    display: none;
+  }
+
+  .auth-mobile-logo {
+    display: inline-flex;
+  }
+
+  .auth-form-panel {
+    background: #fff;
+  }
+}

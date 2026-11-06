@@ -11,6 +11,32 @@
   --shadow:
     rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
 
+  /* Queen City "skyline at dusk" brand palette */
+  --qc-navy: #191335;
+  --qc-indigo: #3a2566;
+  --qc-purple: #6a3391;
+  --qc-magenta: #9c3468;
+  --qc-coral: #e2653f;
+  --qc-gold: #f4a93c;
+  --qc-accent: var(--qc-purple);
+  --qc-accent-dark: var(--qc-indigo);
+  --qc-accent-shadow: rgba(106, 51, 145, 0.35);
+  --qc-gradient-dusk: linear-gradient(
+    135deg,
+    var(--qc-navy) 0%,
+    var(--qc-indigo) 32%,
+    var(--qc-purple) 58%,
+    var(--qc-magenta) 80%,
+    var(--qc-coral) 100%
+  );
+  --qc-overlay-dusk: linear-gradient(
+    165deg,
+    rgba(16, 12, 36, 0.93) 0%,
+    rgba(58, 37, 102, 0.85) 38%,
+    rgba(156, 52, 104, 0.72) 68%,
+    rgba(226, 101, 63, 0.55) 100%
+  );
+
   --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
   --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
   --mono: ui-monospace, Consolas, monospace;
@@ -51,11 +77,7 @@
 }
 
 #root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
+  width: 100%;
   min-height: 100svh;
   display: flex;
   flex-direction: column;
@@ -108,4 +130,23 @@ code {
   line-height: 135%;
   padding: 4px 8px;
   background: var(--code-bg);
+}
+
+/* Attribution caption for the Charlotte skyline backdrop photo */
+.qc-photo-credit {
+  position: absolute;
+  right: 0.75rem;
+  bottom: 0.5rem;
+  z-index: 1;
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.55);
+  text-decoration: none;
+}
+
+.qc-photo-credit:hover {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.qc-photo-credit-fixed {
+  position: fixed;
 }

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
+import { SkylinePhotoCredit } from '../components/SkylinePhotoCredit';
 import { bookService } from '../services/bookService';
 import { BookSearchResultSource } from '../types/book';
 import type { BookSearchResult, Condition, ListingDetails } from '../types/book';
@@ -110,7 +111,9 @@ export const AddBook = () => {
     try {
       const listing = await bookService.createListing({
         catalogId: selectedResult.catalogId ?? undefined,
-        googleBooksId: selectedResult.googleBooksId ?? undefined,
+        // Backend rejects requests that include both; only send googleBooksId
+        // when there's no catalogId.
+        googleBooksId: selectedResult.catalogId ? undefined : selectedResult.googleBooksId ?? undefined,
         conditionId: Number(conditionId),
         notes: notes.trim() || undefined,
       });
@@ -477,6 +480,7 @@ export const AddBook = () => {
           </section>
         )}
       </div>
+      <SkylinePhotoCredit fixed />
     </div>
   );
 };
