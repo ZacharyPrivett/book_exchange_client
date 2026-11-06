@@ -1,13 +1,8 @@
-import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import './Navbar.css';
-import LoginModal from './LoginModal';
-import { RegisterModal } from './RegisterModal';
 
 const Navbar = () => {
-  const [isLoginOpen, setIsLoginOpen] = useState(false);
-  const [isRegisterOpen, setIsRegisterOpen] = useState(false);
   const { user, isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
 
@@ -16,80 +11,47 @@ const Navbar = () => {
     navigate('/');
   };
 
-  const handleLoginSuccess = () => {
-    setIsLoginOpen(false);
-    navigate('/dashboard');
-  };
-
-  const handleRegisterSuccess = () => {
-    setIsRegisterOpen(false);
-    navigate('/dashboard');
-  };
-
-  const switchToRegister = () => {
-    setIsLoginOpen(false);
-    setIsRegisterOpen(true);
-  };
-
-  const switchToLogin = () => {
-    setIsRegisterOpen(false);
-    setIsLoginOpen(true);
-  };
-
   return (
-    <>
-      <nav className="navbar">
-        <div className="navbar-container">
-          <div className="navbar-brand">
-            <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
-              <h2>📚 QC Book Trader</h2>
-            </Link>
-          </div>
-          
-          <ul className="navbar-menu">
-            <li><Link to="/">Home</Link></li>
-            {isAuthenticated && (
-              <>
-                <li><Link to="/dashboard">Dashboard</Link></li>
-                <li><a href="#books">Books</a></li>
-                <li><a href="#exchange">Exchange</a></li>
-              </>
-            )}
-          </ul>
-
-          <div className="navbar-auth">
-            {isAuthenticated ? (
-              <div className="user-info">
-                <span>Welcome, {user?.displayName}!</span>
-                <button onClick={handleLogout} className="btn-logout">
-                  Logout
-                </button>
-              </div>
-            ) : (
-              <button onClick={() => setIsLoginOpen(true)} className="btn-login">
-                Login
-              </button>
-            )}
-          </div>
+    <nav className="navbar">
+      <div className="navbar-container">
+        <div className="navbar-brand">
+          <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
+            <h2>📚 QC Book Trader</h2>
+          </Link>
         </div>
-      </nav>
 
-      {isLoginOpen && (
-        <LoginModal 
-          onClose={() => setIsLoginOpen(false)}
-          onLoginSuccess={handleLoginSuccess}
-          onSwitchToRegister={switchToRegister}
-        />
-      )}
+        <ul className="navbar-menu">
+          <li><Link to="/">Home</Link></li>
+          {isAuthenticated && (
+            <>
+              <li><Link to="/dashboard">Dashboard</Link></li>
+              <li><a href="#books">Books</a></li>
+              <li><a href="#exchange">Exchange</a></li>
+            </>
+          )}
+        </ul>
 
-      {isRegisterOpen && (
-        <RegisterModal 
-          onClose={() => setIsRegisterOpen(false)}
-          onRegisterSuccess={handleRegisterSuccess}
-          onSwitchToLogin={switchToLogin}
-        />
-      )}
-    </>
+        <div className="navbar-auth">
+          {isAuthenticated ? (
+            <div className="user-info">
+              <span>Welcome, {user?.displayName}!</span>
+              <button onClick={handleLogout} className="btn-logout">
+                Logout
+              </button>
+            </div>
+          ) : (
+            <div className="auth-actions">
+              <Link to="/login" className="btn-login">
+                Login
+              </Link>
+              <Link to="/signup" className="btn-signup">
+                Sign Up
+              </Link>
+            </div>
+          )}
+        </div>
+      </div>
+    </nav>
   );
 };
 

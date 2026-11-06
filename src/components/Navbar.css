@@ -1,5 +1,5 @@
 .navbar {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--qc-gradient-dusk);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   position: sticky;
   top: 0;
@@ -57,22 +57,52 @@
   color: white;
 }
 
+.auth-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
 .btn-login,
+.btn-signup,
 .btn-logout {
+  display: inline-flex;
+  align-items: center;
   background: white;
-  color: #667eea;
+  color: var(--qc-accent);
   border: none;
   padding: 0.5rem 1.5rem;
   border-radius: 20px;
   font-weight: 600;
   cursor: pointer;
+  text-decoration: none;
   transition: all 0.3s ease;
 }
 
 .btn-login:hover,
+.btn-signup:hover,
 .btn-logout:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.btn-login {
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  border: 1.5px solid rgba(255, 255, 255, 0.6);
+}
+
+.btn-login:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.btn-signup {
+  background: var(--qc-gold);
+  color: var(--qc-navy);
+}
+
+.btn-signup:hover {
+  background: #ffbb57;
 }
 
 .btn-logout {

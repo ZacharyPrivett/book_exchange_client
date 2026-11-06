@@ -1,6 +1,11 @@
 .dashboard {
+  position: relative;
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background-image: var(--qc-overlay-dusk), url('../assets/charlotte-skyline.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 .dashboard-container {
@@ -65,7 +70,7 @@
 .stat-card-value {
   font-size: 2rem;
   font-weight: bold;
-  color: #667eea;
+  color: var(--qc-accent);
   margin: 0;
 }
 
@@ -97,7 +102,7 @@
   padding: 1rem 1.5rem;
   border: none;
   border-radius: 8px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--qc-gradient-dusk);
   color: white;
   font-size: 1rem;
   font-weight: 600;
@@ -107,7 +112,7 @@
 
 .action-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 4px 12px var(--qc-accent-shadow);
 }
 
 .action-btn-icon {
@@ -152,7 +157,7 @@
   border: none;
   border-radius: 8px;
   padding: 0.7rem 1rem;
-  background: #667eea;
+  background: var(--qc-accent);
   color: white;
   font-weight: 600;
   cursor: pointer;
@@ -160,7 +165,7 @@
 }
 
 .library-action:hover {
-  background: #566bd1;
+  background: var(--qc-accent-dark);
 }
 
 .library-grid {
@@ -185,7 +190,7 @@
   width: 92px;
   flex-shrink: 0;
   background: #f0f2ff;
-  color: #667eea;
+  color: var(--qc-accent);
   font-size: 2rem;
 }
 
@@ -309,6 +314,10 @@
 }
 
 @media (max-width: 768px) {
+  .dashboard {
+    background-attachment: scroll;
+  }
+
   .dashboard-container {
     padding: 1rem;
   }

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import Navbar from '../components/Navbar';
+import { SkylinePhotoCredit } from '../components/SkylinePhotoCredit';
 import { bookService } from '../services/bookService';
 import type { ListingSummary } from '../types/book';
 import './Dashboard.css';
@@ -145,6 +146,7 @@ export const Dashboard = () => {
           )}
         </section>
       </div>
+      <SkylinePhotoCredit fixed />
     </div>
   );
 };

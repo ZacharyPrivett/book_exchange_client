@@ -5,14 +5,18 @@
 
 /* Hero Section */
 .hero {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  position: relative;
+  background-image: var(--qc-overlay-dusk), url('../assets/charlotte-skyline.jpg');
+  background-size: cover;
+  background-position: center 70%;
+  background-repeat: no-repeat;
   color: white;
   padding: 4rem 2rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 3rem;
-  min-height: 500px;
+  min-height: 560px;
 }
 
 .hero-content {
@@ -34,8 +38,8 @@
 }
 
 .cta-button {
-  background: white;
-  color: #667eea;
+  background: var(--qc-gold);
+  color: var(--qc-navy);
   border: none;
   padding: 1rem 2.5rem;
   font-size: 1.1rem;
@@ -43,12 +47,12 @@
   border-radius: 50px;
   cursor: pointer;
   transition: all 0.3s;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
 .cta-button:hover {
   transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
 }
 
 .hero-image {
@@ -68,6 +72,7 @@
   position: absolute;
   font-size: 5rem;
   animation: float 3s ease-in-out infinite;
+  filter: drop-shadow(0 12px 20px rgba(0, 0, 0, 0.45));
 }
 
 .book-1 {
@@ -136,7 +141,7 @@
 }
 
 .feature-card h3 {
-  color: #667eea;
+  color: var(--qc-accent);
   font-size: 1.5rem;
   margin: 0 0 0.5rem 0;
 }
@@ -177,7 +182,7 @@
 .step-number {
   width: 60px;
   height: 60px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--qc-gradient-dusk);
   color: white;
   border-radius: 50%;
   display: flex;
@@ -202,21 +207,26 @@
 
 .step-arrow {
   font-size: 2rem;
-  color: #667eea;
+  color: var(--qc-accent);
   font-weight: bold;
 }
 
 /* CTA Section */
 .cta-section {
+  position: relative;
   padding: 4rem 2rem;
   text-align: center;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background-image: var(--qc-overlay-dusk), url('../assets/charlotte-skyline.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   color: white;
 }
 
 .cta-section h2 {
   font-size: 2.5rem;
   margin: 0 0 1rem 0;
+  color: white;
 }
 
 .cta-section p {
@@ -226,8 +236,8 @@
 }
 
 .cta-button-secondary {
-  background: white;
-  color: #667eea;
+  background: var(--qc-gold);
+  color: var(--qc-navy);
   border: none;
   padding: 1rem 2.5rem;
   font-size: 1.1rem;
@@ -244,7 +254,7 @@
 
 /* Footer */
 .footer {
-  background: #333;
+  background: var(--qc-navy);
   color: white;
   text-align: center;
   padding: 2rem;
