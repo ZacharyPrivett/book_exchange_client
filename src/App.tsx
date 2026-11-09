@@ -6,6 +6,7 @@ import { Signup } from './pages/Signup';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { Dashboard } from './pages/Dashboard';
 import { AddBook } from './pages/AddBook';
+import { BrowseBooks } from './pages/BrowseBooks';
 import OAuthCallback from './components/OAuthCallback';
 
 
@@ -23,6 +24,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/books"
+            element={
+              <ProtectedRoute>
+                <BrowseBooks />
               </ProtectedRoute>
             }
           />

@@ -63,7 +63,7 @@ export const Dashboard = () => {
               <span className="action-btn-icon">➕</span>
               List a Book
             </button>
-            <button className="action-btn">
+            <button className="action-btn" onClick={() => navigate('/books')}>
               <span className="action-btn-icon">🔍</span>
               Browse Books
             </button>

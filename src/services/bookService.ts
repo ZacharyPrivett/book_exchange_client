@@ -41,4 +41,9 @@ export const bookService = {
     const response = await api.get<ListingSummary[]>('/books/mine');
     return response.data;
   },
+
+  getAllListings: async (): Promise<ListingSummary[]> => {
+    const response = await api.get<ListingSummary[]>(`/books`);
+    return response.data;
+  }
 };
