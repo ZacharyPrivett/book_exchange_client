@@ -75,6 +75,29 @@ export interface ListingDetails {
   notes: string | null;
   ownerDisplayName: string;
   createdAt: string;
+  // Pending backend support: true when the authenticated caller owns this
+  // listing. Absent/undefined is treated as false, so owner-only UI stays
+  // hidden until the API starts sending this field.
+  isOwner?: boolean;
+}
+
+// Matches BookExchange.Api.Books.Dtos.ListingStatus (string values from
+// listing.Status.ToString())
+export const ListingStatus = {
+  Available: 'Available',
+  Pending: 'Pending',
+  Exchanged: 'Exchanged',
+  Removed: 'Removed',
+  Returned: 'Returned',
+  Private: 'Private',
+} as const;
+export type ListingStatus = (typeof ListingStatus)[keyof typeof ListingStatus];
+
+// Pending backend support: body for PATCH /books/{id}
+export interface UpdateListingRequest {
+  notes?: string | null;
+  status?: ListingStatus;
+  conditionId?: number;
 }
 
 // Matches BookExchange.Api.Books.Dtos.ListingSummaryDto

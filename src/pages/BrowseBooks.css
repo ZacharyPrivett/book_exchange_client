@@ -1,0 +1,221 @@
+.browse-books {
+  position: relative;
+  min-height: 100vh;
+  background-image: var(--qc-overlay-dusk), url('../assets/charlotte-skyline.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.browse-books-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.browse-header {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.browse-header h1 {
+  margin: 0 0 0.5rem 0;
+  color: #333;
+  font-size: 2rem;
+}
+
+.browse-header p {
+  margin: 0;
+  color: #666;
+  font-size: 1.1rem;
+}
+
+.browse-listings {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.browse-listings-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.browse-listings-heading h2 {
+  margin: 0 0 0.35rem;
+  color: #333;
+  font-size: 1.5rem;
+}
+
+.browse-listings-heading p {
+  margin: 0;
+  color: #666;
+}
+
+.browse-search {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+}
+
+.browse-search input {
+  flex: 1;
+  padding: 0.75rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  box-sizing: border-box;
+  transition: border-color 0.3s;
+}
+
+.browse-search input:focus {
+  outline: none;
+  border-color: var(--qc-accent);
+}
+
+.browse-clear {
+  border: none;
+  border-radius: 8px;
+  padding: 0.7rem 1rem;
+  background: var(--qc-accent);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.browse-clear:hover {
+  background: var(--qc-accent-dark);
+}
+
+.browse-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.browse-card {
+  display: flex;
+  min-height: 150px;
+  overflow: hidden;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  background: #fff;
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.browse-card:hover,
+.browse-card:focus-visible {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.browse-card:focus-visible {
+  outline: 3px solid var(--qc-accent);
+  outline-offset: 2px;
+}
+
+.browse-cover {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 92px;
+  flex-shrink: 0;
+  background: #f0f2ff;
+  color: var(--qc-accent);
+  font-size: 2rem;
+}
+
+.browse-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.browse-card-content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+  padding: 1rem;
+}
+
+.browse-card h3 {
+  margin: 0 0 0.4rem;
+  overflow: hidden;
+  color: #333;
+  font-size: 1rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.browse-authors {
+  margin: 0;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.browse-card-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-top: auto;
+  padding-top: 1rem;
+  color: #777;
+  font-size: 0.8rem;
+}
+
+.browse-status {
+  color: #4b8f5a;
+  font-weight: 600;
+}
+
+.browse-message,
+.browse-empty {
+  padding: 2rem;
+  text-align: center;
+  color: #777;
+}
+
+.browse-error {
+  color: #b42318;
+}
+
+.browse-empty p {
+  margin: 0.5rem 0 1rem;
+}
+
+.browse-empty-icon {
+  font-size: 2rem;
+}
+
+@media (max-width: 768px) {
+  .browse-books {
+    background-attachment: scroll;
+  }
+
+  .browse-books-container {
+    padding: 1rem;
+  }
+
+  .browse-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .browse-listings-heading {
+    flex-direction: column;
+  }
+
+  .browse-search {
+    flex-direction: column;
+  }
+}

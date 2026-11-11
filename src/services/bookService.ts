@@ -6,6 +6,7 @@ import type {
   CreateManualBookRequest,
   ListingDetails,
   ListingSummary,
+  UpdateListingRequest,
 } from '../types/book';
 import api from './api';
 
@@ -39,6 +40,21 @@ export const bookService = {
 
   getMyListings: async (): Promise<ListingSummary[]> => {
     const response = await api.get<ListingSummary[]>('/books/mine');
+    return response.data;
+  },
+
+  getAllListings: async (): Promise<ListingSummary[]> => {
+    const response = await api.get<ListingSummary[]>(`/books`);
+    return response.data;
+  },
+
+  getListingDetails: async (id: string): Promise<ListingDetails> => {
+    const response = await api.get<ListingDetails>(`/books/${encodeURIComponent(id)}`);
+    return response.data;
+  },
+
+  updateListing: async (id: string, dto: UpdateListingRequest): Promise<ListingDetails> => {
+    const response = await api.patch<ListingDetails>(`/books/${encodeURIComponent(id)}`, dto);
     return response.data;
   },
 };

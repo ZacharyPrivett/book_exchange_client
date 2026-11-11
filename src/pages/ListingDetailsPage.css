@@ -1,0 +1,306 @@
+.listing-details-page {
+  position: relative;
+  min-height: 100vh;
+  background-image: var(--qc-overlay-dusk), url('../assets/charlotte-skyline.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+.listing-details-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.listing-details-back {
+  display: inline-block;
+  margin-bottom: 1rem;
+  color: white;
+  font-weight: 600;
+}
+
+.listing-details-panel {
+  position: relative;
+  overflow: hidden;
+  padding: 2rem;
+  border-radius: 12px;
+  background: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.listing-details-panel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: var(--qc-gradient-dusk);
+}
+
+.listing-details-error {
+  color: #b42318;
+}
+
+.listing-details-layout {
+  display: grid;
+  grid-template-columns: minmax(160px, 250px) minmax(0, 1fr);
+  gap: 2rem;
+}
+
+.listing-details-cover {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: start;
+  min-height: 300px;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #f0f2ff;
+  font-size: 4rem;
+}
+
+.listing-details-cover img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.listing-details-content h1 {
+  margin: 0 0 0.4rem;
+  color: #333;
+}
+
+.status-banner {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 0.75rem;
+  padding: 0.4rem 1rem;
+  border-radius: 999px;
+  color: white;
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.status-banner::before {
+  content: '●';
+  font-size: 0.6rem;
+}
+
+.status-available {
+  background: linear-gradient(135deg, #2f9e44, #51cf66);
+}
+
+.status-pending {
+  background: linear-gradient(135deg, #e8970f, var(--qc-gold));
+}
+
+.status-exchanged {
+  background: linear-gradient(135deg, var(--qc-indigo), var(--qc-purple));
+}
+
+.status-removed {
+  background: linear-gradient(135deg, #6b7280, #9ca3af);
+}
+
+.status-returned {
+  background: linear-gradient(135deg, var(--qc-coral), var(--qc-magenta));
+}
+
+.status-private {
+  background: linear-gradient(135deg, var(--qc-navy), var(--qc-indigo));
+}
+
+.status-unknown {
+  background: #9ca3af;
+}
+
+.condition-badge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  background: var(--qc-accent-shadow);
+  color: var(--qc-accent);
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.listing-details-authors {
+  margin: 0 0 1.5rem;
+  color: #666;
+}
+
+.listing-details-facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+}
+
+.listing-details-facts dt {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.listing-details-facts dd {
+  margin: 0.25rem 0 0;
+  color: #333;
+  overflow-wrap: anywhere;
+}
+
+.listing-details-content h2 {
+  margin: 1.5rem 0 0.5rem;
+  color: #333;
+  font-size: 1.2rem;
+}
+
+.listing-details-text {
+  color: #555;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.listing-details-exchange {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  border-radius: 8px;
+  background: #f0f2ff;
+}
+
+.listing-details-exchange h2 {
+  margin-top: 0;
+}
+
+.listing-details-exchange p {
+  margin-bottom: 0;
+  color: #555;
+}
+
+.listing-owner-panel {
+  margin-top: 1.5rem;
+  padding: 1.25rem 1.5rem;
+  border-radius: 10px;
+  border-left: 4px solid var(--qc-accent);
+  background: linear-gradient(135deg, rgba(106, 51, 145, 0.06), rgba(226, 101, 63, 0.06));
+}
+
+.listing-owner-panel-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.listing-owner-panel-heading h2 {
+  margin: 0;
+}
+
+.listing-owner-hint {
+  margin: 0.5rem 0 0;
+  color: #666;
+}
+
+.listing-edit-btn,
+.listing-save-btn {
+  border: none;
+  border-radius: 8px;
+  padding: 0.55rem 1.1rem;
+  background: var(--qc-gradient-dusk);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.listing-edit-btn:hover,
+.listing-save-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--qc-accent-shadow);
+}
+
+.listing-cancel-btn {
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 0.5rem 1.1rem;
+  background: white;
+  color: #555;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.listing-cancel-btn:hover:not(:disabled) {
+  border-color: #c0c0c0;
+}
+
+.listing-save-btn:disabled,
+.listing-cancel-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.listing-edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.listing-edit-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  color: #444;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.listing-edit-field textarea,
+.listing-edit-field select {
+  box-sizing: border-box;
+  padding: 0.65rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font: inherit;
+  font-weight: 400;
+  resize: vertical;
+  transition: border-color 0.3s;
+}
+
+.listing-edit-field textarea:focus,
+.listing-edit-field select:focus {
+  outline: none;
+  border-color: var(--qc-accent);
+}
+
+.listing-edit-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+@media (max-width: 768px) {
+  .listing-details-page {
+    background-attachment: scroll;
+  }
+
+  .listing-details-container {
+    padding: 1rem;
+  }
+
+  .listing-details-panel {
+    padding: 1.5rem;
+  }
+
+  .listing-details-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .listing-details-cover {
+    width: min(100%, 250px);
+    min-height: 250px;
+  }
+}
