@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import Navbar from '../components/Navbar';
 import { SkylinePhotoCredit } from '../components/SkylinePhotoCredit';
@@ -103,7 +103,7 @@ export const Dashboard = () => {
           {!listingsLoading && !listingsError && listings.length > 0 && (
             <div className="library-grid">
               {listings.map((listing) => (
-                <article key={listing.id} className="library-card">
+                <Link key={listing.id} className="library-card" to={`/books/${listing.id}`}>
                   <div className="library-cover">
                     {listing.coverImageUrl ? (
                       <img src={listing.coverImageUrl} alt={`Cover of ${listing.title}`} />
@@ -121,7 +121,7 @@ export const Dashboard = () => {
                       <span className="listing-status">{listing.status}</span>
                     </div>
                   </div>
-                </article>
+                </Link>
               ))}
             </div>
           )}

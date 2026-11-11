@@ -68,8 +68,11 @@ api.interceptors.response.use(
       return Promise.reject(error);
     }
 
+    // The refresh endpoint validates the (expired) access token's claims
+    // together with the refresh token, so both must be sent.
+    const accessToken = localStorage.getItem('accessToken');
     const refreshToken = localStorage.getItem('refreshToken');
-    if (!refreshToken) {
+    if (!accessToken || !refreshToken) {
       clearSessionAndRedirectToLogin();
       return Promise.reject(error);
     }
@@ -92,7 +95,10 @@ api.interceptors.response.use(
     try {
       // Use a bare axios call (not the `api` instance) so this request
       // isn't subject to the same interceptors and can't recurse.
-      const { data } = await axios.post<AuthResponse>(`${API_BASE_URL}/auth/refresh`, { refreshToken });
+      const { data } = await axios.post<AuthResponse>(`${API_BASE_URL}/auth/refresh`, {
+        accessToken,
+        refreshToken,
+      });
 
       localStorage.setItem('accessToken', data.accessToken);
       localStorage.setItem('refreshToken', data.refreshToken);

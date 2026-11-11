@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import { SkylinePhotoCredit } from '../components/SkylinePhotoCredit';
 import { bookService } from '../services/bookService';
@@ -75,7 +76,7 @@ export const BrowseBooks = () => {
           {!listingsLoading && !listingsError && filteredListings.length > 0 && (
             <div className="browse-grid">
               {filteredListings.map((listing) => (
-                <article key={listing.id} className="browse-card">
+                <Link key={listing.id} className="browse-card" to={`/books/${listing.id}`}>
                   <div className="browse-cover">
                     {listing.coverImageUrl ? (
                       <img src={listing.coverImageUrl} alt={`Cover of ${listing.title}`} />
@@ -93,7 +94,7 @@ export const BrowseBooks = () => {
                       <span className="browse-status">{listing.status}</span>
                     </div>
                   </div>
-                </article>
+                </Link>
               ))}
             </div>
           )}

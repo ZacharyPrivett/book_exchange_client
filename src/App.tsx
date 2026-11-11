@@ -7,6 +7,7 @@ import { ProtectedRoute } from './components/ProtectedRoute';
 import { Dashboard } from './pages/Dashboard';
 import { AddBook } from './pages/AddBook';
 import { BrowseBooks } from './pages/BrowseBooks';
+import { ListingDetailsPage } from './pages/ListingDetailsPage';
 import OAuthCallback from './components/OAuthCallback';
 
 
@@ -40,6 +41,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <AddBook />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/books/:id"
+            element={
+              <ProtectedRoute>
+                <ListingDetailsPage />
               </ProtectedRoute>
             }
           />
