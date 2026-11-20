@@ -75,6 +75,29 @@ export interface ListingDetails {
   notes: string | null;
   ownerDisplayName: string;
   createdAt: string;
+  // Pending backend support: true when the authenticated caller owns this
+  // listing. Absent/undefined is treated as false, so owner-only UI stays
+  // hidden until the API starts sending this field.
+  isOwner?: boolean;
+}
+
+// Matches BookExchange.Api.Books.Entities.ListingStatus's numeric values (Available = 0,
+// Private = 5). The API's ListingDetails/ListingSummary.status field is the string name
+// (listing.Status.ToString(), e.g. "Available"/"Pending") used for display, but PATCH
+// /books/{id} expects the numeric enum value below. Owners may only switch a listing
+// between Available and Private themselves; the other statuses (Pending, Exchanged,
+// Removed, Returned) reflect an active/completed trade and are set by the backend.
+export const ListingStatus = {
+  Available: 0,
+  Private: 5,
+} as const;
+export type ListingStatus = (typeof ListingStatus)[keyof typeof ListingStatus];
+
+// Pending backend support: body for PATCH /books/{id}
+export interface UpdateListingRequest {
+  notes?: string | null;
+  status?: ListingStatus;
+  conditionId?: number;
 }
 
 // Matches BookExchange.Api.Books.Dtos.ListingSummaryDto

@@ -25,7 +25,7 @@ const Navbar = () => {
           {isAuthenticated && (
             <>
               <li><Link to="/dashboard">Dashboard</Link></li>
-              <li><a href="#books">Books</a></li>
+              <li><Link to="/books">Books</Link></li>
               <li><a href="#exchange">Exchange</a></li>
             </>
           )}
