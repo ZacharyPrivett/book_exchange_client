@@ -81,15 +81,15 @@ export interface ListingDetails {
   isOwner?: boolean;
 }
 
-// Matches BookExchange.Api.Books.Dtos.ListingStatus (string values from
-// listing.Status.ToString())
+// Matches BookExchange.Api.Books.Entities.ListingStatus's numeric values (Available = 0,
+// Private = 5). The API's ListingDetails/ListingSummary.status field is the string name
+// (listing.Status.ToString(), e.g. "Available"/"Pending") used for display, but PATCH
+// /books/{id} expects the numeric enum value below. Owners may only switch a listing
+// between Available and Private themselves; the other statuses (Pending, Exchanged,
+// Removed, Returned) reflect an active/completed trade and are set by the backend.
 export const ListingStatus = {
-  Available: 'Available',
-  Pending: 'Pending',
-  Exchanged: 'Exchanged',
-  Removed: 'Removed',
-  Returned: 'Returned',
-  Private: 'Private',
+  Available: 0,
+  Private: 5,
 } as const;
 export type ListingStatus = (typeof ListingStatus)[keyof typeof ListingStatus];
 
