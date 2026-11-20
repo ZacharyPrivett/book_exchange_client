@@ -5,8 +5,14 @@ import { SkylinePhotoCredit } from '../components/SkylinePhotoCredit';
 import { useConditions } from '../hooks/useConditions';
 import { useListingDetails } from '../hooks/useListingDetails';
 import { bookService } from '../services/bookService';
-import type { ListingStatus } from '../types/book';
-import { getListingStatusMeta, LISTING_STATUS_OPTIONS, toListingStatus } from '../utils/listingStatus';
+import { ListingStatus } from '../types/book';
+import {
+  getEditableListingStatusMeta,
+  getListingStatusMeta,
+  isListingEditable,
+  LISTING_STATUS_OPTIONS,
+  toListingStatus,
+} from '../utils/listingStatus';
 import { sanitizeDescriptionHtml } from '../utils/sanitizeHtml';
 import './ListingDetailsPage.css';
 
@@ -24,7 +30,7 @@ export const ListingDetailsPage = () => {
 
   const [isEditing, setIsEditing] = useState(false);
   const [draftNotes, setDraftNotes] = useState('');
-  const [draftStatus, setDraftStatus] = useState<ListingStatus>('Available');
+  const [draftStatus, setDraftStatus] = useState<ListingStatus>(ListingStatus.Available);
   const [draftConditionId, setDraftConditionId] = useState('');
   const [saving, setSaving] = useState(false);
   const [saveError, setSaveError] = useState('');
@@ -108,14 +114,18 @@ export const ListingDetailsPage = () => {
                   <div className="listing-owner-panel">
                     <div className="listing-owner-panel-heading">
                       <h2>Manage Your Listing</h2>
-                      {!isEditing && (
+                      {!isEditing && isListingEditable(listing.status) && (
                         <button type="button" className="listing-edit-btn" onClick={startEditing}>
                           Edit
                         </button>
                       )}
                     </div>
 
-                    {isEditing ? (
+                    {!isListingEditable(listing.status) ? (
+                      <p className="listing-owner-hint">
+                        This listing can't be edited while it's involved in a trade.
+                      </p>
+                    ) : isEditing ? (
                       <form
                         className="listing-edit-form"
                         onSubmit={(e) => {
@@ -136,11 +146,11 @@ export const ListingDetailsPage = () => {
                           <span>Status</span>
                           <select
                             value={draftStatus}
-                            onChange={(e) => setDraftStatus(e.target.value as ListingStatus)}
+                            onChange={(e) => setDraftStatus(Number(e.target.value) as ListingStatus)}
                           >
                             {LISTING_STATUS_OPTIONS.map((status) => (
                               <option key={status} value={status}>
-                                {getListingStatusMeta(status).label}
+                                {getEditableListingStatusMeta(status).label}
                               </option>
                             ))}
                           </select>
